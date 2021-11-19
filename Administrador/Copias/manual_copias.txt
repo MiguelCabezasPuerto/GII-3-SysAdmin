@@ -1,0 +1,48 @@
+#####################################################################################################
+#              Bienvenido al manual para configurar el sistema de copias de seguridad               #
+#####################################################################################################
+# En caso de cambiar la IP del servidor remoto de copias es necesario ejecutar copiascnf.sh         #
+# para que no nos pida la password (Obligatorio si las copias se van a meter en el cron)            # 
+#                                                                                                   #
+# crearCopiaMariaDB.sh nos permite crear la copia de la base de datos para mandarla remotamente     #
+#                                                                                                   #
+# La configuracion por defecto del fichero copias_config es:                                        #
+#	-/mnt/home /root /etc /usr/local /var /srv /opt#22#ssh#/var/backups#192.168.1.74#copias#    #
+#	 Si desea cambiar esta configuracion edite fichero mateniendo la sintaxis                   #
+#                                                                                                   #
+# El significado de cada columna separadas por # es:                                                #
+#	-Directorio o directorios a copiar (separados por un espacio)                               #
+#	-Puerto de acceso al servidor de copias                                                     #
+#	-Metodo de conexion con el servidor de copias                                               #
+#	-Directorio destino de la copia                                                             #
+#	-Ip del servidor de copias                                                                  #
+#	-Usuario del servidor de copias                                                             #
+#                                                                                                   #
+# Codigos de error:                                                                                 #
+#	-Codigo de error(1): Faltan columnas o la ultima columna(usuario) esta vacia                #
+#	-Codigo de error(2): Alguna columna esta vacia, rellenarla con el valor adecuado            #
+#                                                                                                   #
+# Si se olvida de crear la copia de la base de datos ocurrira lo siguiente:                         #
+#	-rsync: link_stat "directorioDondeBuscaCopia" failed: No such file or directory(2)          #
+#        En este caso hay que ejecutar primero crearCopiaMariaDB.sh si queremos copia de la base    #
+#                                                                                                   #
+# Si pone un directorio a copiar que no existe saldra el siguiente error:                           #
+#	-rsync: link_stat "directorioErroneo" failed: No such file or directory(2)                  #
+#	 En este caso revisar copias_config y poner un directorio valido                            #
+#                                                                                                   #
+# Si pone una IP incorrecta el error que aparece es:                                                #
+#	-ssh: connect to host "IPerronea" port "puertoIndicado": Resource temporarily unavailable   #
+#	 En este caso revisar copias_config y poner una IP valida                                   #
+#                                                                                                   #
+# Si pone un puerto incorrecto aparecera el siguiente error:                                        #
+#	-ssh: conncet to host "IP" port "puertoErroneo": Connection refused                         #
+#	 En este caso revisar copias_config y poner un puerto valido                                #
+#												    #
+# Si pone un usuario incorrecto o esta introduciendo mal la contrasena el error es:                 #
+#	-Permission denied, please try again.							    #
+#	 En este caso revisar copias_config y poner un usuario valido o comprobar que estamos       #
+#	 introduciendo la contraseña correcta							    #
+#                                                                                                   #
+# Puede consultar el fichero /var/log/copias.log para obtener informacion de las copias realizadas  #
+#####################################################################################################
+

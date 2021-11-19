@@ -1,0 +1,1 @@
+/mnt/home /etc /usr/local /opt /var /srv /root#22#ssh#/var/backups#172.20.2.76#copias#
